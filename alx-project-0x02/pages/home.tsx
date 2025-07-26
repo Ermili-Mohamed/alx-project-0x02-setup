@@ -1,20 +1,41 @@
+"use client"
+import React, { useState } from 'react';
 import Card from '@/components/common/Card';
-import React from 'react';
+import PostModal from '@/components/common/PostModal';
+
+interface Post {
+ title: string;
+ content: string;
+}
 
 export default function Home() {
+ const [posts, setPosts] = useState<Post[]>([
+  { title: 'Card Title 1', content: 'This is the content of the first card.' },
+  { title: 'Card Title 2', content: 'Different content for the second card.' },
+ ]);
+ const [isModalOpen, setIsModalOpen] = useState(false);
+
+ const handleAddPost = (title: string, content: string) => {
+  setPosts((prev) => [...prev, { title, content }]);
+ };
+
  return (
   <main className="p-8 space-y-6">
-   <Card
-    title="Card Title 1"
-    content="This is the content of the first card. It can be anything you want to display."
-   />
-   <Card
-    title="Card Title 2"
-    content="Here's some different content for the second card. Cards are reusable!"
-   />
-   <Card
-    title="Card Title 3"
-    content="You can add as many cards as needed by passing different props."
+   <button
+    onClick={() => setIsModalOpen(true)}
+    className="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700"
+   >
+    Add New Post
+   </button>
+
+   {posts.map((post, idx) => (
+    <Card key={idx} title={post.title} content={post.content} />
+   ))}
+
+   <PostModal
+    isOpen={isModalOpen}
+    onClose={() => setIsModalOpen(false)}
+    onSubmit={handleAddPost}
    />
   </main>
  );
