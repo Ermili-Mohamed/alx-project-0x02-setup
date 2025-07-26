@@ -1,4 +1,4 @@
-import Card from '@/components/layout/common/Card';
+import Card from '@/components/common/Card';
 import React from 'react';
 
 export default function Home() {
