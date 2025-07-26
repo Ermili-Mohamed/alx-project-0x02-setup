@@ -1,5 +1,5 @@
-"use client"
 import React, { useState } from 'react';
+import Header from '@/components/layout/Header';
 import Card from '@/components/common/Card';
 import PostModal from '@/components/common/PostModal';
 
@@ -20,23 +20,26 @@ export default function Home() {
  };
 
  return (
-  <main className="p-8 space-y-6">
-   <button
-    onClick={() => setIsModalOpen(true)}
-    className="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700"
-   >
-    Add New Post
-   </button>
+  <>
+   <Header />
+   <main className="p-8 space-y-6">
+    <button
+     onClick={() => setIsModalOpen(true)}
+     className="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700"
+    >
+     Add New Post
+    </button>
 
-   {posts.map((post, idx) => (
-    <Card key={idx} title={post.title} content={post.content} />
-   ))}
+    {posts.map((post, idx) => (
+     <Card key={idx} title={post.title} content={post.content} />
+    ))}
 
-   <PostModal
-    isOpen={isModalOpen}
-    onClose={() => setIsModalOpen(false)}
-    onSubmit={handleAddPost}
-   />
-  </main>
+    <PostModal
+     isOpen={isModalOpen}
+     onClose={() => setIsModalOpen(false)}
+     onSubmit={handleAddPost}
+    />
+   </main>
+  </>
  );
 }
