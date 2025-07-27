@@ -1,28 +1,13 @@
-'use client';
-
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import Header from '@/components/layout/Header';
 import PostCard from '@/components/common/PostCard';
 import { type PostProps } from '@/interfaces';
 
-export default function Posts() {
- const [posts, setPosts] = useState<PostProps[]>([]);
+interface PostsPageProps {
+ posts: PostProps[];
+}
 
- useEffect(() => {
-  const fetchPosts = async () => {
-   const res = await fetch('https://jsonplaceholder.typicode.com/posts?_limit=10');
-   const data = await res.json();
-   const formatted = data.map((post: any) => ({
-    userId: post.userId,
-    title: post.title,
-    content: post.body,
-   }));
-   setPosts(formatted);
-  };
-
-  fetchPosts();
- }, []);
-
+export default function Posts({ posts }: PostsPageProps) {
  return (
   <>
    <Header />
@@ -39,4 +24,22 @@ export default function Posts() {
    </main>
   </>
  );
+}
+
+// ✅ Static Site Generation
+export async function getStaticProps() {
+ const res = await fetch('https://jsonplaceholder.typicode.com/posts?_limit=10');
+ const data = await res.json();
+
+ const posts: PostProps[] = data.map((post: any) => ({
+  userId: post.userId,
+  title: post.title,
+  content: post.body,
+ }));
+
+ return {
+  props: {
+   posts,
+  },
+ };
 }
