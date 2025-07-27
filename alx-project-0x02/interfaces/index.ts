@@ -16,3 +16,15 @@ export interface PostProps {
  title: string;
  content: string;
 }
+
+// interfaces/index.ts
+
+export interface UserProps {
+ id: number;
+ name: string;
+ email: string;
+ address: {
+  street: string;
+  city: string;
+ };
+}
